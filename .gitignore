@@ -1,0 +1,4 @@
+train.csv
+test.csv
+mnist_softmax.py
+network.py
