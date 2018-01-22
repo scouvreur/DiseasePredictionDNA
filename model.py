@@ -1,10 +1,10 @@
 # from sklearn import svm
-import pandas as pd
+# import pandas as pd
 import numpy as np
 # import tensorflow as tf
-import matplotlib.pyplot as plt
-import h5py
-from sklearn.metrics import roc_auc_score
+# import matplotlib.pyplot as plt
+# import h5py
+# from sklearn.metrics import roc_auc_score
 
 # def loadTrainingData():
 # 	'''
@@ -15,4 +15,10 @@ from sklearn.metrics import roc_auc_score
 
 # loadTrainingData()
 
-train = np.zeros(())
+train = np.zeros((10,5,2))
+
+# As the SNP data is binary, can be stored
+# efficiently in 8-bit integer format
+# (minimum in numpy)
+
+print(train)
