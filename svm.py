@@ -21,3 +21,15 @@ def readData():
 
 readData()
 
+train_set = train[:100,:]
+train_label = label[:100]
+test_set = test[:100,:]
+
+clf = svm.SVC()
+clf.fit(train_set, train_label)
+
+test_label = clf.predict(test_set)
+
+print("Ids;TARGET")
+for i in range(len(test_label)):
+	print("ID{};{}".format(i+26500,test_label[i]))

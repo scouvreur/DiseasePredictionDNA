@@ -15,7 +15,7 @@ def loadData():
 	global label
 	global test
 	train = np.loadtxt("train.csv", delimiter=',', skiprows=1, usecols=range(1,36249), dtype='int8')
-	label = np.loadtxt("output.csv", delimiter=',', skiprows=1, usecols=(1), dtype='int8')
+	label = np.loadtxt("train_label.csv", delimiter=';', skiprows=1, usecols=(1), dtype='int8')
 	test = np.loadtxt("test.csv", delimiter=',', skiprows=1, usecols=range(1,36249), dtype='int8')
 
 def saveData():

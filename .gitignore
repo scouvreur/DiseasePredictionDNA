@@ -1,5 +1,7 @@
 train.csv
 test.csv
+train_label.csv
+test_label.csv
 mnist_softmax.py
 DNAdata.h5
 
