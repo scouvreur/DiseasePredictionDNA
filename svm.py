@@ -21,9 +21,13 @@ def readData():
 
 readData()
 
-train_set = train[:100,:]
-train_label = label[:100]
-test_set = test[:100,:]
+# train_set = train[:1000,:]
+# train_label = label[:1000]
+# test_set = test[:1000,:]
+
+train_set = train[:,:]
+train_label = label[:]
+test_set = test[:,:]
 
 clf = svm.SVC()
 clf.fit(train_set, train_label)
