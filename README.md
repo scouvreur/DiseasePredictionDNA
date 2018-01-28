@@ -5,9 +5,11 @@ The dataset was provided by [Owkin-Inserm](https://challengedata.ens.fr/en/chall
 
 | Machine learning model |    AUC   | Rank |    Date    |
 |------------------------|:--------:|:----:|:----------:|
-| Degree 3 SVM           | 0.730327 |   7  | 27/01/2018 |
-| Multi-layer Perceptron |          |      |            |
-| Deep neural network    |          |      |            |
+| Logistic regression    |          |      |            |
+| Degree 3 SVM           | 0.730327 |   8  | 27/01/2018 |
+| Multi-layer Perceptron | 0.725787 |   8  | 27/01/2018 |
+| Deep neural network    | 0.711212 |   8  | 27/01/2018 |
+| Gradient boosted tree  | 0.730905 |   8  | 27/01/2018 |
 
 The training data set contained Ids for patients, a portion of their genotype as Single Nucleotide Polymorphisms (SNPs), and a binary label designating a pathological (1) or healthy (0) phenotype. As is conventional, the testing data did not contain this label. The score of the predictive model was calculated using an area under the curve (AUC) comparing with the true phenotype.
 

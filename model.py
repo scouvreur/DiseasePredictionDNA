@@ -27,6 +27,8 @@ def saveData():
 	h5f.create_dataset('train', data=train)
 	h5f.create_dataset('label', data=label)
 	h5f.create_dataset('test', data=test)
+	h5f.create_dataset('train_feature', data=train_feature)
+	h5f.create_dataset('test_feature', data=test_feature)
 	h5f.close()
 
 def readData():
@@ -39,12 +41,34 @@ def readData():
 	global train
 	global label
 	global test
+	global train_feature
+	global test_feature
 	h5f = h5py.File('DNAdata.h5', 'r')
 	train = h5f['train'][:]
 	label = h5f['label'][:]
 	test = h5f['test'][:]
+	# train_feature = h5f['train_feature'][:]
+	# test_feature = h5f['test_feature'][:]
 	h5f.close()
+	print("--- Data read in successfully ---")
 
 # loadData()
-
 # saveData()
+readData()
+
+train_feature = np.zeros((train.shape[0],int(train.shape[1]/2)), dtype='int8')
+test_feature = np.zeros((test.shape[0],int(test.shape[1]/2)), dtype='int8')
+
+for i in range(train.shape[0]):
+	for j in range(int(train.shape[1]/2)):
+		if (train[i,2*j] == 1) and (train[i,2*j+1] == 1):
+			train_feature[i,j] = 1
+			print("At ({},{}) {}{} SNP MATCH".format(i,j,train[i,2*j],train[i,2*j+1]))
+
+for i in range(test.shape[0]):
+	for j in range(int(test.shape[1]/2)):
+		if (test[i,2*j] == 1) and (test[i,2*j+1] == 1):
+			test_feature[i,j] = 1
+			print("At ({},{}) {}{} SNP MATCH".format(i,j,test[i,2*j],test[i,2*j+1]))
+
+saveData()
