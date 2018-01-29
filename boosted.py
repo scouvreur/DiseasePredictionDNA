@@ -41,7 +41,7 @@ X_test = test_feature[:,:]
 X_train, Y_train = shuffle(X_train, Y_train, random_state=7)
 X_train, X_validation, Y_train, Y_validation = train_test_split(X_train, Y_train, test_size=0.2, random_state=0)
 
-clf = GradientBoostingClassifier(n_estimators=500, learning_rate=0.001)
+clf = XGBClassifier(n_estimators=500, learning_rate=0.001)
 clf.fit(X_train, Y_train)
 
 Y_pred = clf.predict(X_validation)

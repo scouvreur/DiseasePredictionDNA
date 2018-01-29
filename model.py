@@ -58,7 +58,6 @@ def createFeatures():
 	dataset where if an SNP pair is infrequent the data
 	is recorded
 	'''
-
 	global train_feature
 	global test_feature
 	train_feature = np.zeros((train.shape[0],int(train.shape[1]/2)),
