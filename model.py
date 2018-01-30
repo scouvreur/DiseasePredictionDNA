@@ -1,11 +1,12 @@
 import numpy as np
 import h5py
+from matplotlib import pyplot as plt
 
 def loadData():
 	'''
-    This function reads in all the CSV data and saves it to an
-    hdf5 file - it takes around 14mins on average to run on a
-    dual processor workstation
+	This function reads in all the CSV data and saves it to an
+	hdf5 file - it takes around 14mins on average to run on a
+	dual processor workstation
 	'''
 	# traindata format - as the SNP data is binary, can be stored
 	# efficiently in 8-bit integer format (minimum in numpy)
@@ -78,3 +79,19 @@ def createFeatures():
 				test_feature[i,j] = 1
 				print("At ({},{}) {}{} SNP MATCH".format(i,j,
 					  test[i,2*j],test[i,2*j+1]))
+
+def plotMatrixSNP():
+	'''
+	This function plots the SNP matrix data
+	'''
+	plt.title("SNP Feature Matrix - Training Data\n0 - frequent, 1 - infrequent")
+	plt.imshow(train_feature, cmap='gray')
+	plt.colorbar(ticks=[0, 1], orientation='vertical')
+	plt.savefig("trainFeatureSNP.pdf", format='pdf')
+	plt.show()
+
+	plt.title("SNP Feature Matrix - Testing Data\n0 - frequent, 1 - infrequent")
+	plt.imshow(test_feature, cmap='gray')
+	plt.colorbar(ticks=[0, 1], orientation='vertical')
+	plt.savefig("testFeatureSNP.pdf", format='pdf')
+	plt.show()
