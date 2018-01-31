@@ -1,7 +1,7 @@
 import numpy as np
 import h5py
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
 from xgboost import XGBClassifier
 
 def readData():
@@ -27,9 +27,9 @@ def readData():
 
 readData()
 
-# X_train = train[:200,:]
-# Y_train = label[:200]
-# X_test = test[:200,:]
+# X_train = train[:100,:]
+# Y_train = label[:100]
+# X_test = test[:100,:]
 
 X_train = train
 Y_train = label
@@ -43,8 +43,15 @@ clf.fit(X_train, Y_train)
 
 Y_test = clf.predict(X_test)
 
-print("ValidationAUC;{}".format(roc_auc_score(Y_validation, clf.predict(X_validation))))
-print("TrainingAUC;{}".format(roc_auc_score(Y_train, clf.predict(X_train))))
+print("--- Validation set ---")
+print("Accuracy;{}".format(accuracy_score(Y_validation, clf.predict(X_validation))))
+print("F1;{}".format(f1_score(Y_validation, clf.predict(X_validation))))
+print("AUC;{}".format(roc_auc_score(Y_validation, clf.predict(X_validation))))
+
+print("--- Training set ---")
+print("Accuracy;{}".format(accuracy_score(Y_train, clf.predict(X_train))))
+print("F1;{}".format(f1_score(Y_train, clf.predict(X_train))))
+print("AUC;{}".format(roc_auc_score(Y_train, clf.predict(X_train))))
 
 print("Ids;TARGET")
 for i in range(len(X_test)):

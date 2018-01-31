@@ -95,7 +95,3 @@ def plotMatrixSNP():
 	plt.colorbar(ticks=[0, 1], orientation='vertical')
 	plt.savefig("testSNP.pdf", format='pdf')
 	plt.show()
-
-readData()
-plotMatrixSNP()
-
