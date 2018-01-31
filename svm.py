@@ -31,14 +31,14 @@ readData()
 # Y_train = label[:500]
 # X_test = test_feature[:500,:]
 
-X_train = train_feature
+X_train = train
 Y_train = label
-X_test = test_feature
+X_test = test
 
 X_train, X_validation, Y_train, Y_validation = train_test_split(X_train, Y_train, test_size=0.1, random_state=747)
 
-clf = svm.SVC(C=0.001, kernel='rbf')
-# clf = svm.LinearSVC(C=0.001)
+clf = svm.SVC(C=0.0001, kernel='rbf')
+# clf = svm.LinearSVC(C=0.0001)
 clf.fit(X_train, Y_train)
 
 Y_test = clf.predict(X_test)

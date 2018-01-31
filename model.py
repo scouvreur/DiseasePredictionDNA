@@ -84,14 +84,18 @@ def plotMatrixSNP():
 	'''
 	This function plots the SNP matrix data
 	'''
-	plt.title("SNP Feature Matrix - Training Data\n0 - frequent, 1 - infrequent")
-	plt.imshow(train_feature, cmap='gray')
+	plt.title("SNP Matrix - Training Data\n0 - frequent, 1 - infrequent")
+	plt.imshow(train, cmap='gray')
 	plt.colorbar(ticks=[0, 1], orientation='vertical')
-	plt.savefig("trainFeatureSNP.pdf", format='pdf')
+	plt.savefig("trainSNP.pdf", format='pdf')
 	plt.show()
 
-	plt.title("SNP Feature Matrix - Testing Data\n0 - frequent, 1 - infrequent")
-	plt.imshow(test_feature, cmap='gray')
+	plt.title("SNP Matrix - Testing Data\n0 - frequent, 1 - infrequent")
+	plt.imshow(test, cmap='gray')
 	plt.colorbar(ticks=[0, 1], orientation='vertical')
-	plt.savefig("testFeatureSNP.pdf", format='pdf')
+	plt.savefig("testSNP.pdf", format='pdf')
 	plt.show()
+
+readData()
+plotMatrixSNP()
+

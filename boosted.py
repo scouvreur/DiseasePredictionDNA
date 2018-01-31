@@ -27,18 +27,18 @@ def readData():
 
 readData()
 
-# X_train = train_feature[:200,:]
+# X_train = train[:200,:]
 # Y_train = label[:200]
-# X_test = test_feature[:200,:]
+# X_test = test[:200,:]
 
-X_train = train_feature
+X_train = train
 Y_train = label
-X_test = test_feature
+X_test = test
 
 X_train, X_validation, Y_train, Y_validation = train_test_split(X_train, Y_train, test_size=0.1, random_state=747)
 
 # clf = XGBClassifier()
-clf = XGBClassifier(n_estimators=200, learning_rate=0.1)
+clf = XGBClassifier(n_estimators=500, learning_rate=0.001)
 clf.fit(X_train, Y_train)
 
 Y_test = clf.predict(X_test)
@@ -46,6 +46,6 @@ Y_test = clf.predict(X_test)
 print("ValidationAUC;{}".format(roc_auc_score(Y_validation, clf.predict(X_validation))))
 print("TrainingAUC;{}".format(roc_auc_score(Y_train, clf.predict(X_train))))
 
-# print("Ids;TARGET")
-# for i in range(len(X_test)):
-# 	print("ID{};{}".format(i+26500,Y_test[i]))
+print("Ids;TARGET")
+for i in range(len(X_test)):
+    print("ID{};{}".format(i+26500,Y_test[i]))
