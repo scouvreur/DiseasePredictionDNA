@@ -38,7 +38,7 @@ X_test = test
 X_train, X_validation, Y_train, Y_validation = train_test_split(X_train, Y_train, test_size=0.1, random_state=747)
 
 # clf = XGBClassifier()
-clf = XGBClassifier(n_estimators=500, learning_rate=0.001)
+clf = XGBClassifier(n_estimators=n_estimators, max_depth=3)
 clf.fit(X_train, Y_train)
 
 Y_test = clf.predict(X_test)

@@ -1,3 +1,13 @@
+'''
+|=======================================================|
+|                                                       |
+| This program implements functions to import data from |
+| the Owking/INSERM DNA challenge and visualize results |
+|                                                       |
+|=======================================================|
+'''
+print(__doc__)
+
 import numpy as np
 import h5py
 from matplotlib import pyplot as plt
@@ -8,16 +18,19 @@ def loadData():
 	hdf5 file - it takes around 14mins on average to run on a
 	dual processor workstation
 	'''
-	# traindata format - as the SNP data is binary, can be stored
+	# traindata format - SNP data is binary, can be stored
 	# efficiently in 8-bit integer format (minimum in numpy)
-	# Ids,SNP_0_a,SNP_0_b,SNP_0_a,SNP_0_b, [...] ,SNP_18123_a,SNP_18123_b
-	# ID0,1,0,0,0, [...] ,1,0
+	# Ids,SNP_0_a,SNP_0_b, [...] ,SNP_18123_a,SNP_18123_b
+	# ID0,1,0, [...] ,1,0
 	global train
 	global label
 	global test
-	train = np.loadtxt("train.csv", delimiter=',', skiprows=1, usecols=range(1,36249), dtype='int8')
-	label = np.loadtxt("train_label.csv", delimiter=';', skiprows=1, usecols=(1), dtype='int8')
-	test = np.loadtxt("test.csv", delimiter=',', skiprows=1, usecols=range(1,36249), dtype='int8')
+	train = np.loadtxt("train.csv", delimiter=',', skiprows=1,
+					   usecols=range(1,36249), dtype='int8')
+	label = np.loadtxt("train_label.csv", delimiter=';',
+					   skiprows=1, usecols=(1), dtype='int8')
+	test = np.loadtxt("test.csv", delimiter=',', skiprows=1,
+					  usecols=range(1,36249), dtype='int8')
 
 def saveData():
 	'''
@@ -61,10 +74,10 @@ def createFeatures():
 	'''
 	global train_feature
 	global test_feature
-	train_feature = np.zeros((train.shape[0],int(train.shape[1]/2)),
-							  dtype='int8')
-	test_feature = np.zeros((test.shape[0],int(test.shape[1]/2)),
-							 dtype='int8')
+	train_feature = np.zeros((train.shape[0],
+							  train.shape[1]//2), dtype='int8')
+	test_feature = np.zeros((test.shape[0],
+							  test.shape[1]//2), dtype='int8')
 
 	for i in range(train.shape[0]):
 		for j in range(int(train.shape[1]/2)):
@@ -84,13 +97,19 @@ def plotMatrixSNP():
 	'''
 	This function plots the SNP matrix data
 	'''
-	plt.title("SNP Matrix - Training Data\n0 - frequent, 1 - infrequent")
+	trainTitle = '''SNP Matrix - Training Data
+	0 - frequent, 1 - infrequent
+	'''
+	plt.title(trainTitle)
 	plt.imshow(train, cmap='gray')
 	plt.colorbar(ticks=[0, 1], orientation='vertical')
 	plt.savefig("trainSNP.pdf", format='pdf')
 	plt.show()
 
-	plt.title("SNP Matrix - Testing Data\n0 - frequent, 1 - infrequent")
+	testTitle = '''SNP Matrix - Testing Data
+	0 - frequent, 1 - infrequent
+	'''
+	plt.title(testTitle)
 	plt.imshow(test, cmap='gray')
 	plt.colorbar(ticks=[0, 1], orientation='vertical')
 	plt.savefig("testSNP.pdf", format='pdf')
