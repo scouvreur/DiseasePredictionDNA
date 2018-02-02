@@ -2,7 +2,7 @@ import numpy as np
 import h5py
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
-from xgboost import XGBClassifier
+from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
 
 def readData():
 	'''
@@ -27,28 +27,20 @@ def readData():
 
 readData()
 
-# X_train = train[:50,:]
+# X_train = train_feature[:50,:]
 # Y_train = label[:50]
-# X_test = test[:50,:]
+# X_test = test_feature[:50,:]
 
 X_train = train
 Y_train = label
 X_test = test
 
-X_train, X_validation, Y_train, Y_validation = train_test_split(X_train, Y_train, test_size=0.2, random_state=747)
+X_train, X_validation, Y_train, Y_validation = train_test_split(X_train, Y_train, test_size=0.2, random_state=0)
 
-n_estimators=1000
-max_depth=8
-learning_rate=0.01
-
-# clf = XGBClassifier()
-clf = XGBClassifier(n_estimators=n_estimators, max_depth=max_depth, learning_rate=learning_rate, silent=False)
+clf = LogisticRegression(penalty='l1')
 clf.fit(X_train, Y_train)
 
 Y_test = clf.predict(X_test)
-
-print("--- Model parameters ---")
-print("XGBClassifier(n_estimators={}, max_depth={}, learning_rate={}, silent=False)".format(n_estimators, max_depth, learning_rate))
 
 print("--- Validation set ---")
 print("Accuracy;{}".format(accuracy_score(Y_validation, clf.predict(X_validation))))
@@ -62,4 +54,4 @@ print("AUC;{}".format(roc_auc_score(Y_train, clf.predict(X_train))))
 
 print("Ids;TARGET")
 for i in range(len(X_test)):
-    print("ID{};{}".format(i+26500,Y_test[i]))
+	print("ID{};{}".format(i+26500,Y_test[i]))
