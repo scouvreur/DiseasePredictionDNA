@@ -37,10 +37,16 @@ X_test = test
 
 X_train, X_validation, Y_train, Y_validation = train_test_split(X_train, Y_train, test_size=0.2, random_state=0)
 
-clf = LogisticRegression(penalty='l1')
+C=0.01
+penalty='l2'
+
+clf = LogisticRegression(C=C, penalty=penalty)
 clf.fit(X_train, Y_train)
 
 Y_test = clf.predict(X_test)
+
+print("--- Model parameters ---")
+print("LogisticRegression(C={}, penalty={})".format(C, penalty))
 
 print("--- Validation set ---")
 print("Accuracy;{}".format(accuracy_score(Y_validation, clf.predict(X_validation))))

@@ -38,13 +38,18 @@ X_test = test
 
 X_train, X_validation, Y_train, Y_validation = train_test_split(X_train, Y_train, test_size=0.2, random_state=0)
 
-clf = svm.SVC(C=0.0001, kernel='rbf', random_state=0)
+C=0.0001
+kernel='rbf'
+
+# clf = svm.SVC(C=0.0001, kernel='rbf', random_state=0)
 # clf = svm.SVC(C=0.0001, kernel='linear', random_state=0)
-# clf = svm.LinearSVC(C=0.0001, random_state=0)
-# clf = LogisticRegression()
+clf = svm.LinearSVC(C=C, random_state=0)
 clf.fit(X_train, Y_train)
 
 Y_test = clf.predict(X_test)
+
+print("--- Model parameters ---")
+print("LinearSVC(C={}))".format(C))
 
 print("--- Validation set ---")
 print("Accuracy;{}".format(accuracy_score(Y_validation, clf.predict(X_validation))))

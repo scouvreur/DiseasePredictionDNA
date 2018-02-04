@@ -39,7 +39,7 @@ X_train, X_validation, Y_train, Y_validation = train_test_split(X_train, Y_train
 
 n_estimators=1000
 max_depth=8
-learning_rate=0.01
+learning_rate=10.0
 
 # clf = XGBClassifier()
 clf = XGBClassifier(n_estimators=n_estimators, max_depth=max_depth, learning_rate=learning_rate, silent=False)
