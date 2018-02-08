@@ -35,11 +35,11 @@ X_train = train
 Y_train = label
 X_test = test
 
-X_train, X_validation, Y_train, Y_validation = train_test_split(X_train, Y_train, test_size=0.2, random_state=747)
+X_train, X_validation, Y_train, Y_validation = train_test_split(X_train, Y_train, test_size=0.2, random_state=7)
 
 n_estimators=1000
 max_depth=8
-learning_rate=10.0
+learning_rate=1.0
 
 # clf = XGBClassifier()
 clf = XGBClassifier(n_estimators=n_estimators, max_depth=max_depth, learning_rate=learning_rate, silent=False)
@@ -48,7 +48,8 @@ clf.fit(X_train, Y_train)
 Y_test = clf.predict(X_test)
 
 print("--- Model parameters ---")
-print("XGBClassifier(n_estimators={}, max_depth={}, learning_rate={}, silent=False)".format(n_estimators, max_depth, learning_rate))
+print("XGBClassifier(n_estimators={}, max_depth={}, learning_rate={},
+	  silent=False)".format(n_estimators, max_depth, learning_rate))
 
 print("--- Validation set ---")
 print("Accuracy;{}".format(accuracy_score(Y_validation, clf.predict(X_validation))))
