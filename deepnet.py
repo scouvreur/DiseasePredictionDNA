@@ -1,9 +1,8 @@
 import numpy as np
 import h5py
 from matplotlib import pyplot as plt
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.utils import plot_model
+from keras.models import Sequential, load_model
+from keras.layers import Dense, Dropout
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
 from sklearn.pipeline import Pipeline
@@ -31,27 +30,37 @@ def readData():
 
 readData()
 
-X_train = train[:100,:]
-Y_train = label[:100]
-X_test = test[:100,:]
+# X_train = train[:100,:]
+# Y_train = label[:100]
+# X_test = test[:100,:]
 
-# X_train = train
-# Y_train = label
-# X_test = test
+X_train = train
+Y_train = label
+X_test = test
 
 X_train, X_validation, Y_train, Y_validation = train_test_split(X_train, Y_train, test_size=0.2, random_state=7)
 
 # Create model
 model = Sequential()
-model.add(Dense(100, input_dim=36248, kernel_initializer='uniform', activation='relu'))
-model.add(Dense(100, kernel_initializer='uniform', activation='relu'))
-model.add(Dense(100, kernel_initializer='uniform', activation='relu'))
-model.add(Dense(100, kernel_initializer='uniform', activation='relu'))
+model.add(Dense(240, input_dim=36248, kernel_initializer='uniform', activation='relu'))
+model.add(Dropout(0.2))
+model.add(Dense(240, kernel_initializer='uniform', activation='relu'))
+model.add(Dropout(0.2))
+model.add(Dense(240, kernel_initializer='uniform', activation='relu'))
+model.add(Dropout(0.2))
+model.add(Dense(240, kernel_initializer='uniform', activation='relu'))
+model.add(Dropout(0.2))
+model.add(Dense(240, kernel_initializer='uniform', activation='relu'))
+model.add(Dropout(0.2))
 model.add(Dense(1, kernel_initializer='uniform', activation='sigmoid'))
 # Compile model
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 history = model.fit(X_train, Y_train, epochs=100, batch_size=5, verbose=True)
+
+model.save('DeepNet.h5')
+# del model
+# model = load_model('DeepNet.h5')
 
 Y_test = np.around(model.predict(X_test))
 Y_test = Y_test.astype(int)
