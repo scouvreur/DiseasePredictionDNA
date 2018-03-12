@@ -2,7 +2,9 @@ import numpy as np
 import h5py
 from matplotlib import pyplot as plt
 from keras.models import Sequential, load_model
-from keras.layers import Dense, Dropout
+from keras.layers import Dense, Dropout, LSTM
+from keras.layers.convolutional import Conv1D, MaxPooling1D
+from keras.layers.embeddings import Embedding
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
 from sklearn.pipeline import Pipeline
@@ -30,33 +32,35 @@ def readData():
 
 readData()
 
-# X_train = train[:100,:]
-# Y_train = label[:100]
-# X_test = test[:100,:]
+X_train = train[:100,:]
+Y_train = label[:100]
+X_test = test[:100,:]
 
-X_train = train
-Y_train = label
-X_test = test
+# X_train = train
+# Y_train = label
+# X_test = test
 
 X_train, X_validation, Y_train, Y_validation = train_test_split(X_train, Y_train, test_size=0.2, random_state=7)
 
-# Create model
+# create the model
+embedding_vec_length = 32
 model = Sequential()
-model.add(Dense(368, input_dim=36248, kernel_initializer='uniform', activation='relu'))
-# model.add(Dropout(0.2))
-
-for i in range(0,20):
-	model.add(Dense(368, kernel_initializer='uniform', activation='relu'))
-	# model.add(Dropout(0.2))
-
-model.add(Dense(368, kernel_initializer='uniform', activation='relu'))
-model.add(Dense(1, kernel_initializer='uniform', activation='sigmoid'))
-# Compile model
+model.add(Embedding(train.shape[0], embedding_vec_length, input_length=train.shape[1]))
+model.add(Dropout(0.2))
+model.add(Conv1D(filters=32, kernel_size=3, padding='same', activation='relu'))
+model.add(MaxPooling1D(pool_size=2))
+model.add(LSTM(100))
+model.add(Dropout(0.2))
+model.add(Dense(1, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+print(model.summary())
+history = model.fit(X_train, Y_train, epochs=2, batch_size=50, verbose=True)
 
-history = model.fit(X_train, Y_train, epochs=500, batch_size=5, verbose=True)
+# Evaluation of the model
+scores = model.evaluate(X_validation, Y_validation, verbose=0)
+print("Accuracy: %.2f%%" % (scores[1]*100))
 
-model.save('DeepNet.h5')
+model.save('LSTMnet.h5')
 # del model
 # model = load_model('DeepNet.h5')
 
@@ -74,8 +78,8 @@ print("Accuracy;{}".format(accuracy_score(Y_train, np.around(model.predict(X_tra
 print("F1;{}".format(f1_score(Y_train, np.around(model.predict(X_train)))))
 print("AUC;{}".format(roc_auc_score(Y_train, np.around(model.predict(X_train)))))
 
-f = open("test_label_deepnet_1WEEKRUN.csv", 'w')
-f = open("test_label_deepnet_1WEEKRUN.csv", 'a')
+f = open("test_label_LSTMnet.csv", 'w')
+f = open("test_label_LSTMnet.csv", 'a')
 print("Ids;TARGET", file=f)
 for i in range(len(X_test)):
     print("ID{};{}".format(i+26500,Y_test[i]), file=f)
