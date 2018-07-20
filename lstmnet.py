@@ -32,13 +32,13 @@ def readData():
 
 readData()
 
-X_train = train[:100,:]
-Y_train = label[:100]
-X_test = test[:100,:]
+# X_train = train[:100,:]
+# Y_train = label[:100]
+# X_test = test[:100,:]
 
-# X_train = train
-# Y_train = label
-# X_test = test
+X_train = train
+Y_train = label
+X_test = test
 
 X_train, X_validation, Y_train, Y_validation = train_test_split(X_train, Y_train, test_size=0.2, random_state=7)
 
@@ -47,14 +47,14 @@ embedding_vec_length = 32
 model = Sequential()
 model.add(Embedding(train.shape[0], embedding_vec_length, input_length=train.shape[1]))
 model.add(Dropout(0.2))
-model.add(Conv1D(filters=32, kernel_size=3, padding='same', activation='relu'))
+model.add(Conv1D(filters=embedding_vec_length, kernel_size=3, padding='same', activation='relu'))
 model.add(MaxPooling1D(pool_size=2))
 model.add(LSTM(100))
 model.add(Dropout(0.2))
 model.add(Dense(1, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
-history = model.fit(X_train, Y_train, epochs=2, batch_size=50, verbose=True)
+history = model.fit(X_train, Y_train, epochs=100, batch_size=100, verbose=True)
 
 # Evaluation of the model
 scores = model.evaluate(X_validation, Y_validation, verbose=0)
